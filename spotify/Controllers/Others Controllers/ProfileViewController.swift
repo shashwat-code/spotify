@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  ProfileViewController.swift
 //  spotify
 //
 //  Created by Shashwat on 28/09/21.
@@ -7,11 +7,11 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
+
         // Do any additional setup after loading the view.
     }
     

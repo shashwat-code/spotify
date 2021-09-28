@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  PremiumViewController.swift
 //  spotify
 //
 //  Created by Shashwat on 28/09/21.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class PremiumViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
