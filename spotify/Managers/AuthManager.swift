@@ -7,9 +7,26 @@
 
 import Foundation
 
-class AuthManager{
+
+final class AuthManager{
+    
     static let  shared = AuthManager()
-    init() {
+    
+    init() {}
+    
+    struct Constants {
+        static let clientID = "310aa8907ceb40c0a34302b23a8fa47a"
+        static let clientSecret = "e294deef65b2408592edf40af304ee20"
+    }
+
+    
+    public var signURL: URL?{
+        let base = "https://accounts.spotify.com/authorize"
+        let scope = "user-read-private"
+        let URI = "https://www.iosacademy.io"
+        let urlString = "\(base)?response_type=code&client_id=\(Constants.clientID)&scope=\(scope)&redirect_uri=\(URI)&show_dialog=TRUE"
+        return URL(string: urlString)
+        
         
     }
     
@@ -28,5 +45,8 @@ class AuthManager{
     
     var shouldRefreshToken:Bool{
         return false
+    }
+    public func exchangeCode(code:String,completion: @escaping ((Bool)->Void)){
+        
     }
 }

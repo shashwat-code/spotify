@@ -26,6 +26,7 @@
 		E4AA8AB02703857C002E4E97 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AA8AAF2703857C002E4E97 /* HapticManager.swift */; };
 		E4AA8AB22703858E002E4E97 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AA8AB12703858E002E4E97 /* AuthManager.swift */; };
 		E4AA8AB4270386DC002E4E97 /* PremiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AA8AB3270386DC002E4E97 /* PremiumViewController.swift */; };
+		E4BF38EB27048DA100FE851B /* sizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EA27048DA100FE851B /* sizeExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		E4AA8AAF2703857C002E4E97 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		E4AA8AB12703858E002E4E97 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		E4AA8AB3270386DC002E4E97 /* PremiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumViewController.swift; sourceTree = "<group>"; };
+		E4BF38EA27048DA100FE851B /* sizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizeExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +142,7 @@
 				E40CE67D27037E6400ED7DCF /* Assets.xcassets */,
 				E40CE67427037E5A00ED7DCF /* AppDelegate.swift */,
 				E40CE67627037E5A00ED7DCF /* SceneDelegate.swift */,
+				E4BF38EA27048DA100FE851B /* sizeExtensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4BF38EB27048DA100FE851B /* sizeExtensions.swift in Sources */,
 				E40CE67927037E5A00ED7DCF /* HomeViewController.swift in Sources */,
 				E4AA8AB02703857C002E4E97 /* HapticManager.swift in Sources */,
 				E4AA8AB4270386DC002E4E97 /* PremiumViewController.swift in Sources */,
