@@ -46,5 +46,14 @@ class AuthViewController: UITabBarController, WKNavigationDelegate {
             return
         }
         print("code: \(code)")
+        
+        webView.isHidden = true
+        
+        AuthManager.shared.exchangeCode(code: code) { [weak self] success in
+            DispatchQueue.main.async {
+                self?.navigationController?.popToRootViewController(animated: true)
+                self?.completionHandler?(success)
+            }
+        }
     }
 }

@@ -38,6 +38,7 @@ class WelcomeViewController: UIViewController {
     @objc func signInTapped(){
         let vc = AuthViewController()
         vc.completionHandler = { [weak self] success in
+            print("problem in success value return")
             DispatchQueue.main.async {
                 self?.handleSignIn(success:success)
             }
@@ -48,7 +49,17 @@ class WelcomeViewController: UIViewController {
     }
     
     func handleSignIn(success:Bool){
-        // log user in 
+        guard success else {
+            let alert = UIAlertController(title: "Oops", message: "something is not right", preferredStyle: .alert )
+            alert.addAction(UIAlertAction(title: "dismiss", style: .cancel, handler: nil))
+            present(alert,animated: true)
+            print("error captured here")
+            return
+        }
+        let mainVC = TabBarViewController()
+        print("pushing tabbarView contrller")
+        mainVC.modalPresentationStyle = .fullScreen
+        present(mainVC, animated: true, completion: nil)
     }
     
     

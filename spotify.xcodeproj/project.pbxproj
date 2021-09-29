@@ -27,6 +27,7 @@
 		E4AA8AB22703858E002E4E97 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AA8AB12703858E002E4E97 /* AuthManager.swift */; };
 		E4AA8AB4270386DC002E4E97 /* PremiumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AA8AB3270386DC002E4E97 /* PremiumViewController.swift */; };
 		E4BF38EB27048DA100FE851B /* sizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EA27048DA100FE851B /* sizeExtensions.swift */; };
+		E4BF38ED2704D60F00FE851B /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EC2704D60F00FE851B /* AuthResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		E4AA8AB12703858E002E4E97 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		E4AA8AB3270386DC002E4E97 /* PremiumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumViewController.swift; sourceTree = "<group>"; };
 		E4BF38EA27048DA100FE851B /* sizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizeExtensions.swift; sourceTree = "<group>"; };
+		E4BF38EC2704D60F00FE851B /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		E40CE68827037EB900ED7DCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E4BF38EC2704D60F00FE851B /* AuthResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				E40CE67527037E5A00ED7DCF /* AppDelegate.swift in Sources */,
 				E4AA8A9827038290002E4E97 /* SearchViewController.swift in Sources */,
 				E4AA8AA22703839A002E4E97 /* AuthViewController.swift in Sources */,
+				E4BF38ED2704D60F00FE851B /* AuthResponse.swift in Sources */,
 				E4AA8A9C270382EE002E4E97 /* TabBarViewController.swift in Sources */,
 				E4AA8AB22703858E002E4E97 /* AuthManager.swift in Sources */,
 				E40CE67727037E5A00ED7DCF /* SceneDelegate.swift in Sources */,
