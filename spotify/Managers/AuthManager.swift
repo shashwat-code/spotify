@@ -21,7 +21,7 @@ final class AuthManager{
         static let redirectURI = "https://www.iosacademy.io"
         static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
     }
-
+    
     
     public var signURL: URL?{
         let base = "https://accounts.spotify.com/authorize"
@@ -113,9 +113,7 @@ final class AuthManager{
         
         var components  = URLComponents()
         components.queryItems = [URLQueryItem(name: "grant_type", value: "refresh_token"),
-                                 URLQueryItem(name: "refresh_token", value: refreshToken)
-        ]
-        
+                                 URLQueryItem(name: "refresh_token", value: refreshToken)]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/x-www-form-urlencoded ", forHTTPHeaderField: "Content-Type")
@@ -127,6 +125,7 @@ final class AuthManager{
             completion(false)
             return
         }
+        
         request.setValue("Basic \(basic64Token)", forHTTPHeaderField: "Authorization")
         request.httpBody = components.query?.data(using: .utf8)
         URLSession.shared.dataTask(with: request){[weak self] data,response,error in
@@ -136,7 +135,6 @@ final class AuthManager{
                 return
             }
             do{
-                
                 let result = try JSONDecoder().decode(AuthResponse.self,from:data)
                 self?.cacheToken(result:result)
                 print("success: \(result)")
@@ -145,16 +143,14 @@ final class AuthManager{
                 completion(false)
             }
         }.resume()
-        
     }
     
     
     public func cacheToken(result:AuthResponse){
         UserDefaults().setValue(result.access_token, forKey: "access_token")
-       if let refresh_token = result.refresh_token {
-        UserDefaults().setValue(refresh_token, forKey: "refresh_token")
+        if let refresh_token = result.refresh_token {
+            UserDefaults().setValue(refresh_token, forKey: "refresh_token")
         }
-        
         UserDefaults().setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expires_in")
         
         

@@ -37,13 +37,14 @@ class WelcomeViewController: UIViewController {
     
     @objc func signInTapped(){
         let vc = AuthViewController()
+        print("sign in button activated")
         vc.completionHandler = { [weak self] success in
-            print("problem in success value return")
+            print("sucess in signTapped\(success)")
             DispatchQueue.main.async {
                 self?.handleSignIn(success:success)
             }
         }
-        
+        print("problem in success value return")
         navigationController?.pushViewController(vc, animated: true)
         
     }
