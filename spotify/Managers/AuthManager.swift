@@ -32,6 +32,8 @@ final class AuthManager{
         
     }
     
+    private var refreshingToken:Bool = false
+    
     var isSignedIn: Bool{
         return (accessToken != nil)
     }
@@ -96,12 +98,40 @@ final class AuthManager{
         }.resume()
     }
     
+    private var onRefreshBlocks = [(String)->Void]()
+    
+    public func withValideToken(completion: @escaping (String)->Void){
+        
+        guard !refreshingToken else{
+            onRefreshBlocks.append(completion)
+            return
+        }
+        
+        if shouldRefreshToken{
+            // Refresh
+            refreshIfNeeded { [weak self] success in
+                if let token = self?.accessToken,success{
+                        completion(token)
+                }
+            }
+        }
+        else if let token = accessToken{
+            completion(token)
+        }
+    }
+    
     
     public func refreshIfNeeded(completion: @escaping ((Bool)->Void)){
+        
+        guard !refreshingToken else{
+            return
+        }
         guard shouldRefreshToken else{
             completion(true)
             return
         }
+        
+        refreshingToken = true
         
         guard let refreshToken = self.refreshtoken else{
             return
@@ -130,12 +160,15 @@ final class AuthManager{
         request.httpBody = components.query?.data(using: .utf8)
         URLSession.shared.dataTask(with: request){[weak self] data,response,error in
             guard let data = data, error == nil else{
+                self?.refreshingToken = false
                 completion(false)
-                print("we are inside exchangeCode function ")
                 return
             }
             do{
                 let result = try JSONDecoder().decode(AuthResponse.self,from:data)
+                self?.onRefreshBlocks.forEach({ $0(result.access_token)
+                })
+                self?.onRefreshBlocks.removeAll()
                 self?.cacheToken(result:result)
                 print("success: \(result)")
             }catch{
