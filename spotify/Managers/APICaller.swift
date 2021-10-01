@@ -14,6 +14,59 @@ final class APICaller{
         static let base = "https://api.spotify.com/v1"
     }
     
+    
+    
+    func getNewReleases(completion: @escaping (Result<newReleases,Error>)->Void){
+        let baseRequest = Constants.base + "/browse/new-releases?limit=50"
+        createRequest(url: URL(string: baseRequest), method: .GET) { request in
+            print(baseRequest)
+            let task = URLSession.shared.dataTask(with: request){data,_,error in
+                guard let data = data , error == nil else{
+                    return
+                }
+                do{
+                    let json = try JSONDecoder().decode(newReleases.self, from: data)
+                    print(json)
+                    
+                   // completion(.success(json as! newReleases))
+                }catch{
+                    print(error)
+                    print(error.localizedDescription)
+                    print("error caught")
+                    completion(.failure(error))
+                    
+                }
+            }
+            task.resume()
+        }
+    
+    }
+    
+    func getAllFeaturedPlaylists(completion: @escaping ((Result<featuredPlaylistsModel,Error>)->Void)){
+        let base = (Constants.base + "/browse/featured-playlists")
+        createRequest(url: URL(string: base), method: .GET) { url in
+            let task = URLSession.shared.dataTask(with: url) { data, _, error in
+                guard let data=data, error==nil else{
+                    return
+                }
+                
+                do{
+                    
+                    let json1 = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    print(json1)
+                    let json = try JSONDecoder().decode(featuredPlaylistsModel.self, from: data)
+                    print(json)
+                }catch{
+                    print(error)
+                    print(error.localizedDescription)
+                }
+            }
+            task.resume()
+            
+        }
+        
+    }
+    
     func getCurrentProfile(completion: @escaping (Result<UserProfile,Error>)->Void){
         createRequest(url: URL(string: Constants.base + "/me"), method: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, response, error in
@@ -21,8 +74,6 @@ final class APICaller{
                     return }
                 do{
                     let json = try JSONDecoder().decode(UserProfile.self, from: data)
-                    let json1 = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(json1)
                     print(json)
                     completion(.success(json))
                 }catch{
@@ -34,6 +85,44 @@ final class APICaller{
             }
             task.resume()
         }
+    }
+    
+    func getRecommendations(genres:Set<String>,completion: @escaping ((Result<recommendationModel,Error>)->Void)){
+        let seed = genres.joined(separator: ",")
+        createRequest(url: URL(string: Constants.base + "/recommendations?limit=40&seed_genres=\(seed)"), method: .GET) { baseRequest in
+            let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
+                guard let data = data , error == nil else{
+                    return
+                }
+                do{
+                    let json = try JSONDecoder().decode(recommendationModel.self, from: data)
+                    print(json)
+                }catch{
+                    print(error)
+                    print("error")
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    func getGenreRecommendation(completion: @escaping ((Result<genreRecommendation,Error>)->Void)){
+                createRequest(url: URL(string: Constants.base + "/recommendations/available-genre-seeds"), method: .GET) { baseRequest in
+                    let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
+                        guard let data = data , error == nil else{
+                            return
+                        }
+                        do{
+                            let json = try JSONDecoder().decode(genreRecommendation.self, from: data)
+                            completion(.success(json))
+                        }catch{
+                            print("error")
+                            completion(.failure(error))
+                        }
+        
+                    }
+                    task.resume()
+                }
     }
     
     enum HTTPMethod:String {
@@ -56,4 +145,7 @@ final class APICaller{
         }
         
     }
+    
+    
+    
 }

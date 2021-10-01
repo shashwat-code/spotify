@@ -19,7 +19,7 @@ final class AuthManager{
         static let clientSecret = "3c249ade624f495aaed7c27081736544"
         static let tokenAPIURL = "https://accounts.spotify.com/api/token"
         static let redirectURI = "https://www.iosacademy.io"
-        static let scopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
+        static let scopes = " "
     }
     
     
@@ -121,13 +121,13 @@ final class AuthManager{
     }
     
     
-    public func refreshIfNeeded(completion: @escaping ((Bool)->Void)){
+    public func refreshIfNeeded(completion: ((Bool)->Void)?){
         
         guard !refreshingToken else{
             return
         }
         guard shouldRefreshToken else{
-            completion(true)
+            completion?(true)
             return
         }
         
@@ -152,7 +152,7 @@ final class AuthManager{
         let data = basicToken.data(using: .utf8)
         guard let basic64Token = data?.base64EncodedString() else{
             print("failure")
-            completion(false)
+            completion?(false)
             return
         }
         
@@ -161,7 +161,7 @@ final class AuthManager{
         URLSession.shared.dataTask(with: request){[weak self] data,response,error in
             guard let data = data, error == nil else{
                 self?.refreshingToken = false
-                completion(false)
+                completion?(false)
                 return
             }
             do{
@@ -173,7 +173,7 @@ final class AuthManager{
                 print("success: \(result)")
             }catch{
                 print(error.localizedDescription)
-                completion(false)
+                completion?(false)
             }
         }.resume()
     }

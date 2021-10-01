@@ -45,6 +45,7 @@ class ProfileViewController: UIViewController {
                 }
             }
     }
+        
     }
     func addImage(){
         let url = "https://blog.prepscholar.com/hs-fs/hubfs/body_s3.jpg?width=640&name=body_s3.jpg"
@@ -92,22 +93,8 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource{
         cell.textLabel?.text = userDetail[indexPath.row][0]
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    
 }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-
