@@ -14,8 +14,7 @@ final class APICaller{
         static let base = "https://api.spotify.com/v1"
     }
     
-    
-    
+    // MARK: - get new releases
     func getNewReleases(completion: @escaping (Result<newReleases,Error>)->Void){
         let baseRequest = Constants.base + "/browse/new-releases?limit=50"
         createRequest(url: URL(string: baseRequest), method: .GET) { request in
@@ -42,6 +41,7 @@ final class APICaller{
     
     }
     
+    // MARK: - get all featured playlist
     func getAllFeaturedPlaylists(completion: @escaping ((Result<featuredPlaylistsModel,Error>)->Void)){
         let base = (Constants.base + "/browse/featured-playlists")
         createRequest(url: URL(string: base), method: .GET) { url in
@@ -67,6 +67,7 @@ final class APICaller{
         
     }
     
+    // MARK: - fetch profile
     func getCurrentProfile(completion: @escaping (Result<UserProfile,Error>)->Void){
         createRequest(url: URL(string: Constants.base + "/me"), method: .GET) { baseRequest in
             let task = URLSession.shared.dataTask(with: baseRequest) { data, response, error in
@@ -87,6 +88,7 @@ final class APICaller{
         }
     }
     
+    // MARK: - get recommendation
     func getRecommendations(genres:Set<String>,completion: @escaping ((Result<recommendationModel,Error>)->Void)){
         let seed = genres.joined(separator: ",")
         createRequest(url: URL(string: Constants.base + "/recommendations?limit=40&seed_genres=\(seed)"), method: .GET) { baseRequest in
@@ -106,6 +108,7 @@ final class APICaller{
         }
     }
     
+    // MARK: - genre recommendation
     func getGenreRecommendation(completion: @escaping ((Result<genreRecommendation,Error>)->Void)){
                 createRequest(url: URL(string: Constants.base + "/recommendations/available-genre-seeds"), method: .GET) { baseRequest in
                     let task = URLSession.shared.dataTask(with: baseRequest) { data, _, error in
@@ -125,11 +128,13 @@ final class APICaller{
                 }
     }
     
+    
     enum HTTPMethod:String {
         case GET
         case POST
     }
     
+    // MARK: - this function creates request
     func createRequest(url: URL?,
                        method: HTTPMethod,
                        completion: @escaping ((URLRequest)->Void)){
@@ -145,7 +150,4 @@ final class APICaller{
         }
         
     }
-    
-    
-    
 }

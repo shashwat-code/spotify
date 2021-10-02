@@ -8,6 +8,11 @@ class TabBarViewController: UITabBarController {
         let search = SearchViewController()
         let library = LibraryViewController()
         let premium = PremiumViewController()
+//        let blurEffect = UIBlurEffect(style: .systemThickMaterial) //(frame: CGRect(x: 0, y: 795 , width: view.frame.width, height: 50))
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.frame = CGRect(x: 0, y: 795 , width: view.frame.width, height: 50)
+//        view.addSubview(blurView)
+        
         
         home.title = "Home"
         search.title = "Search"

@@ -10,13 +10,11 @@ import Foundation
 struct featuredPlaylistsModel:Codable {
     let message:String
     let playlists: playlistResponse
-   // let playlists: [items]
 }
 
 struct playlistResponse:Codable {
     let items:[playlist]
 }
-
 
 struct user:Codable {
     let id:String

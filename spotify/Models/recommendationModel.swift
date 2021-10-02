@@ -8,7 +8,6 @@
 import Foundation
 
 struct recommendationModel:Codable {
-    //let seeds: [track]
     let tracks: [track]
 }
 struct track:Codable {
