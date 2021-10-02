@@ -18,20 +18,18 @@ final class APICaller{
     func getNewReleases(completion: @escaping (Result<newReleases,Error>)->Void){
         let baseRequest = Constants.base + "/browse/new-releases?limit=50"
         createRequest(url: URL(string: baseRequest), method: .GET) { request in
-            print(baseRequest)
+         //   print(baseRequest)
             let task = URLSession.shared.dataTask(with: request){data,_,error in
                 guard let data = data , error == nil else{
                     return
                 }
                 do{
                     let json = try JSONDecoder().decode(newReleases.self, from: data)
-                    print(json)
-                    
-                   // completion(.success(json as! newReleases))
+                //    print(json)
+                    completion(.success(json))
                 }catch{
                     print(error)
-                    print(error.localizedDescription)
-                    print("error caught")
+              //      print(error.localizedDescription)
                     completion(.failure(error))
                     
                 }
@@ -51,14 +49,12 @@ final class APICaller{
                 }
                 
                 do{
-                    
-                    let json1 = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    print(json1)
                     let json = try JSONDecoder().decode(featuredPlaylistsModel.self, from: data)
-                    print(json)
+                  //  print(json)
+                    completion(.success(json))
                 }catch{
                     print(error)
-                    print(error.localizedDescription)
+                //    print(error.localizedDescription)
                 }
             }
             task.resume()
@@ -75,12 +71,12 @@ final class APICaller{
                     return }
                 do{
                     let json = try JSONDecoder().decode(UserProfile.self, from: data)
-                    print(json)
+              //      print(json)
                     completion(.success(json))
                 }catch{
                     print(error)
-                    print(error.localizedDescription)
-                    print("error found while parsing the value")
+               //     print(error.localizedDescription)
+               //     print("error found while parsing the value")
                     completion(.failure(error))
                 }
             }
@@ -98,10 +94,11 @@ final class APICaller{
                 }
                 do{
                     let json = try JSONDecoder().decode(recommendationModel.self, from: data)
-                    print(json)
+                    completion(.success(json))
+             //       print(json)
                 }catch{
                     print(error)
-                    print("error")
+             //       print("error")
                 }
             }
             task.resume()
@@ -119,7 +116,7 @@ final class APICaller{
                             let json = try JSONDecoder().decode(genreRecommendation.self, from: data)
                             completion(.success(json))
                         }catch{
-                            print("error")
+               //             print("error")
                             completion(.failure(error))
                         }
         
