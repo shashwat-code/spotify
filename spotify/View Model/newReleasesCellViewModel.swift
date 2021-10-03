@@ -13,3 +13,5 @@ struct newReleasesCellViewModel {
     let numberOfTrack:Int
     let artistName:String
 }
+
+

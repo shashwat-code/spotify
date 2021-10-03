@@ -16,7 +16,7 @@ final class APICaller{
     
     // MARK: - get new releases
     func getNewReleases(completion: @escaping (Result<newReleases,Error>)->Void){
-        let baseRequest = Constants.base + "/browse/new-releases?limit=50"
+        let baseRequest = Constants.base + "/browse/new-releases/?country=IN&limit=50"
         createRequest(url: URL(string: baseRequest), method: .GET) { request in
          //   print(baseRequest)
             let task = URLSession.shared.dataTask(with: request){data,_,error in
