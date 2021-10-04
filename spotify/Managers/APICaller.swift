@@ -41,7 +41,7 @@ final class APICaller{
     
     // MARK: - get all featured playlist
     func getAllFeaturedPlaylists(completion: @escaping ((Result<featuredPlaylistsModel,Error>)->Void)){
-        let base = (Constants.base + "/browse/featured-playlists")
+        let base = (Constants.base + "/browse/featured-playlists/?country=IN&limit=50")
         createRequest(url: URL(string: base), method: .GET) { url in
             let task = URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data=data, error==nil else{
@@ -50,8 +50,10 @@ final class APICaller{
                 
                 do{
                     let json = try JSONDecoder().decode(featuredPlaylistsModel.self, from: data)
-                  //  print(json)
+                //    let j = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     completion(.success(json))
+                   // print("this json: \(j)")
+                    print("this is json file: ",json.playlists)
                 }catch{
                     print(error)
                 //    print(error.localizedDescription)

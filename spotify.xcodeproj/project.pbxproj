@@ -45,6 +45,7 @@
 		E4BF38ED2704D60F00FE851B /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EC2704D60F00FE851B /* AuthResponse.swift */; };
 		E4BF38EF27058DA900FE851B /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EE27058DA900FE851B /* UserProfile.swift */; };
 		E4BF38F12705E4FF00FE851B /* settingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38F02705E4FF00FE851B /* settingsModel.swift */; };
+		E4F5F77E270B08F7006345C1 /* featuredPlaylistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		E4BF38EC2704D60F00FE851B /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		E4BF38EE27058DA900FE851B /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		E4BF38F02705E4FF00FE851B /* settingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsModel.swift; sourceTree = "<group>"; };
+		E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = featuredPlaylistCellViewModel.swift; sourceTree = "<group>"; };
 		E75D8B94CE88A79E3BC3CFF9 /* Pods-spotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotify.debug.xcconfig"; path = "Target Support Files/Pods-spotify/Pods-spotify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				E43786302708B75100AC10C9 /* newReleasesCellViewModel.swift */,
+				E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */,
 			);
 			path = "View Model";
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				E40CE67527037E5A00ED7DCF /* AppDelegate.swift in Sources */,
 				E437862D2708942C00AC10C9 /* featuredPlaylistCollectionViewCell.swift in Sources */,
 				E483038E2707798A0007CCCC /* playlist.swift in Sources */,
+				E4F5F77E270B08F7006345C1 /* featuredPlaylistCellViewModel.swift in Sources */,
 				E4AA8A9827038290002E4E97 /* SearchViewController.swift in Sources */,
 				E4AA8AA22703839A002E4E97 /* AuthViewController.swift in Sources */,
 				E48303842707521F0007CCCC /* ImageModel.swift in Sources */,

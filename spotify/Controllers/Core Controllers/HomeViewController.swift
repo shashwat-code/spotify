@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     
     enum browseType{
         case newRelease(viewModels: [newReleasesCellViewModel] )
-        case featuredPlaylist(viewModels: [newReleasesCellViewModel] )
+        case featuredPlaylist(viewModels: [featuredPlaylistCellViewModel] )
         case recommendedPlaylist(viewModels: [newReleasesCellViewModel] )
     }
     
@@ -87,15 +87,15 @@ class HomeViewController: UIViewController {
                                                 heightDimension: .fractionalHeight(1)))
             
             item.contentInsets = NSDirectionalEdgeInsets(
-                                                top: 5,
-                                                leading: 5,
-                                                bottom: 5,
-                                                trailing: 5)
+                                                top: 2,
+                                                leading: 2,
+                                                bottom: 2,
+                                                trailing: 2)
             
-            let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0) , heightDimension: .absolute(240)), subitem: item,count: 3)
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9) , heightDimension: .absolute(240)), subitem: verticalGroup,count: 2)
+            let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(250) , heightDimension: .absolute(250)), subitem: item,count: 1)
+            let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(250) , heightDimension: .absolute(250)), subitem: verticalGroup,count: 1)
             let section = NSCollectionLayoutSection(group: horizontalGroup)
-            section.orthogonalScrollingBehavior = .groupPagingCentered
+            section.orthogonalScrollingBehavior = .groupPaging
             print("section 2")
             return section
             
@@ -252,7 +252,6 @@ class HomeViewController: UIViewController {
                   let featured = featured?.playlists.items,
              //     let genre = genreRecommendation?.genres,
                   let tracks = recommendation?.tracks else{
-                fatalError("models are nil")
                 return
             }
             print("conf models")
@@ -270,7 +269,11 @@ class HomeViewController: UIViewController {
                                                                             artWorkURL: URL(string: $0.images.first?.url ?? ""),
                                                                             numberOfTrack: $0.total_tracks,
                                                                             artistName: $0.artists.first?.name ?? "-")})))
-        sections.append(.featuredPlaylist(viewModels: []) )
+        sections.append(.featuredPlaylist(viewModels: featured.compactMap({
+            return featuredPlaylistCellViewModel(name: $0.name,
+                                                 creatorName: $0.owner.display_name,
+                                                 artwork: URL(string: $0.images.first?.url ?? ""))
+        })) )
         sections.append(.recommendedPlaylist(viewModels: []) )
         collectionView.reloadData()
     }
@@ -312,12 +315,11 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
             return cell
         case .featuredPlaylist( let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: featuredPlaylistCollectionViewCell.identifier , for: indexPath) as? featuredPlaylistCollectionViewCell else{
-                let e = UICollectionViewCell()
-                e.backgroundColor = .blue
-                return e
+               
+                return UICollectionViewCell()
             }
-            cell.backgroundColor = .orange
-            cell.layer.cornerRadius = view.width/80
+            let viewModel = viewModels[indexPath.row]
+            cell.configure(with: viewModel)
             return cell
         case .recommendedPlaylist( let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendedTrackCollectionViewCell.identifier, for: indexPath) as?
