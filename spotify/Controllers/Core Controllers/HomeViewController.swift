@@ -12,7 +12,7 @@ class HomeViewController: UIViewController {
     enum browseType{
         case newRelease(viewModels: [newReleasesCellViewModel] )
         case featuredPlaylist(viewModels: [featuredPlaylistCellViewModel] )
-        case recommendedPlaylist(viewModels: [newReleasesCellViewModel] )
+        case recommendedPlaylist(viewModels: [recommendedCellViewModel] )
     }
     
     var collectionView:UICollectionView = UICollectionView(frame: .zero,
@@ -20,6 +20,10 @@ class HomeViewController: UIViewController {
                                                             return HomeViewController().createSectionLayout(section: sectionIndex)
                                                            })
     )
+    
+    var albumArr:[album] = []
+    var featuredArr:[playlist] = []
+    var tracksArr:[track] = []
     
     // MARK:- array of all sections
     private var sections = [browseType]()
@@ -78,7 +82,7 @@ class HomeViewController: UIViewController {
             
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .groupPaging
-            print("section 1")
+
             return section
             
         case 1:
@@ -96,19 +100,19 @@ class HomeViewController: UIViewController {
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .absolute(250) , heightDimension: .absolute(250)), subitem: verticalGroup,count: 1)
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .groupPaging
-            print("section 2")
+
             return section
             
         case 2:
             let item = NSCollectionLayoutItem(layoutSize:  NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
             
-            item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
+            item.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
             
-            let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0) , heightDimension: .absolute(240)), subitem: item,count: 3)
-            let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9) , heightDimension: .absolute(240)), subitem: verticalGroup,count: 2)
+            let verticalGroup = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0) , heightDimension: .absolute(240)), subitem: item,count: 1)
+            let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.6) , heightDimension: .absolute(240)), subitem: verticalGroup,count: 1)
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .groupPaging
-            print("section 3")
+      
             return section
             
         case 3:
@@ -120,7 +124,7 @@ class HomeViewController: UIViewController {
             let horizontalGroup = NSCollectionLayoutGroup.horizontal(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.9) , heightDimension: .absolute(240)), subitem: verticalGroup,count: 2)
             let section = NSCollectionLayoutSection(group: horizontalGroup)
             section.orthogonalScrollingBehavior = .groupPaging
-            print("section 1")
+     
             return section
             
         case 4:
@@ -220,7 +224,6 @@ class HomeViewController: UIViewController {
             case .success(let model):
                 let genres = model.genres
                 var seed = Set<String>()
-               // print(genres)
                 while seed.count<5 {
                     if let element = genres.randomElement(){
                         seed.insert(element)
@@ -245,36 +248,37 @@ class HomeViewController: UIViewController {
                 break
             }
         }
-        print("not entering group into")
         group.notify(queue: .main) {
-            print("not entering")
             guard let newAlbum = newReleases?.albums.items,
                   let featured = featured?.playlists.items,
              //     let genre = genreRecommendation?.genres,
                   let tracks = recommendation?.tracks else{
                 return
             }
-            print("conf models")
-            print(newAlbum.count)
+            
             self.configureModel(newAlbums: newAlbum , featured: featured, tracks: tracks)// genre: genre)
         }
     }
     
+    
     private func configureModel(newAlbums:[album],featured:[playlist],tracks: [track]){
-        print(newAlbums.count)
-        print(featured.count)
+
         
         sections.append(.newRelease(viewModels: newAlbums.compactMap({
                                             return newReleasesCellViewModel(name: $0.name,
                                                                             artWorkURL: URL(string: $0.images.first?.url ?? ""),
                                                                             numberOfTrack: $0.total_tracks,
                                                                             artistName: $0.artists.first?.name ?? "-")})))
+        
         sections.append(.featuredPlaylist(viewModels: featured.compactMap({
             return featuredPlaylistCellViewModel(name: $0.name,
                                                  creatorName: $0.owner.display_name,
                                                  artwork: URL(string: $0.images.first?.url ?? ""))
         })) )
-        sections.append(.recommendedPlaylist(viewModels: []) )
+        
+        sections.append(.recommendedPlaylist(viewModels: tracks.compactMap({
+                                                     return recommendedCellViewModel(name: $0.name,
+                                                                                     artworkURL: URL(string: $0.album.images.first?.url ?? " "))}) ))
         collectionView.reloadData()
     }
 }
@@ -284,7 +288,6 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         let item = sections[section]
         switch item {
         case .newRelease( let viewModels):
-            print(viewModels.count)
             return viewModels.count
         case .featuredPlaylist( let viewModels):
             return viewModels.count
@@ -297,20 +300,35 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         return sections.count
     }
     
-    //shashwat
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        switch sections[indexPath.section]{
+        case .newRelease:
+            let album = albumArr[indexPath.row]
+            let vc  = albumViewController(album: album)
+            navigationItem.largeTitleDisplayMode = .never
+            navigationController?.pushViewController(vc, animated: true)
+            break
+        case .featuredPlaylist:
+            break
+        case .recommendedPlaylist:
+            break
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let type = sections[indexPath.section]
-        print(type)
-        print(indexPath.section)
+
         switch type {
         case .newRelease( let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: newReleaseCollectionViewCell.identifier, for: indexPath) as? newReleaseCollectionViewCell else{
                 return UICollectionViewCell()
             }
-            print(indexPath.section)
+
             let viewModel = viewModels[indexPath.row]
             cell.configure(with: viewModel)
-        //    cell.backgroundColor = .red
+
             cell.layer.cornerRadius = view.width/80
             return cell
         case .featuredPlaylist( let viewModels):
@@ -324,14 +342,12 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         case .recommendedPlaylist( let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: recommendedTrackCollectionViewCell.identifier, for: indexPath) as?
                 recommendedTrackCollectionViewCell else{
-                let e = UICollectionViewCell()
-                e.backgroundColor = .white
-                    return e
+               return UICollectionViewCell()
                 }
-            cell.layer.cornerRadius = view.width/80
-            cell.backgroundColor = .blue
+            let viewModel = viewModels[indexPath.row]
+            cell.configure(with: viewModel)
+          //  cell.configure(with: viewModel)
             return cell
-        
         }
 
     }

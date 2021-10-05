@@ -53,7 +53,7 @@ final class APICaller{
                 //    let j = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
                     completion(.success(json))
                    // print("this json: \(j)")
-                    print("this is json file: ",json.playlists)
+                    //print("this is json file: ",json.playlists)
                 }catch{
                     print(error)
                 //    print(error.localizedDescription)

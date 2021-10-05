@@ -45,7 +45,9 @@
 		E4BF38ED2704D60F00FE851B /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EC2704D60F00FE851B /* AuthResponse.swift */; };
 		E4BF38EF27058DA900FE851B /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38EE27058DA900FE851B /* UserProfile.swift */; };
 		E4BF38F12705E4FF00FE851B /* settingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4BF38F02705E4FF00FE851B /* settingsModel.swift */; };
+		E4DD79BD270C612700ECCC07 /* albumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD79BC270C612700ECCC07 /* albumViewController.swift */; };
 		E4F5F77E270B08F7006345C1 /* featuredPlaylistCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */; };
+		E4F5F780270B826D006345C1 /* recommendedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4F5F77F270B826D006345C1 /* recommendedCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,7 +92,9 @@
 		E4BF38EC2704D60F00FE851B /* AuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
 		E4BF38EE27058DA900FE851B /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		E4BF38F02705E4FF00FE851B /* settingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = settingsModel.swift; sourceTree = "<group>"; };
+		E4DD79BC270C612700ECCC07 /* albumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = albumViewController.swift; sourceTree = "<group>"; };
 		E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = featuredPlaylistCellViewModel.swift; sourceTree = "<group>"; };
+		E4F5F77F270B826D006345C1 /* recommendedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = recommendedCellViewModel.swift; sourceTree = "<group>"; };
 		E75D8B94CE88A79E3BC3CFF9 /* Pods-spotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spotify.debug.xcconfig"; path = "Target Support Files/Pods-spotify/Pods-spotify.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -187,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				E43786302708B75100AC10C9 /* newReleasesCellViewModel.swift */,
+				E4F5F77F270B826D006345C1 /* recommendedCellViewModel.swift */,
 				E4F5F77D270B08F7006345C1 /* featuredPlaylistCellViewModel.swift */,
 			);
 			path = "View Model";
@@ -255,6 +260,7 @@
 				E4AA8AA12703839A002E4E97 /* AuthViewController.swift */,
 				E4AA8AA3270383A9002E4E97 /* SettingsViewController.swift */,
 				E4AA8AAB27038551002E4E97 /* SearchResultViewController.swift */,
+				E4DD79BC270C612700ECCC07 /* albumViewController.swift */,
 			);
 			path = "Others Controllers";
 			sourceTree = "<group>";
@@ -398,12 +404,14 @@
 				E4AA8AB22703858E002E4E97 /* AuthManager.swift in Sources */,
 				E483039027077B0F0007CCCC /* audioTrack.swift in Sources */,
 				E43786352708D3A000AC10C9 /* genreCollectionViewCell.swift in Sources */,
+				E4DD79BD270C612700ECCC07 /* albumViewController.swift in Sources */,
 				E40CE67727037E5A00ED7DCF /* SceneDelegate.swift in Sources */,
 				E4AA8AAA270384AD002E4E97 /* PlaylistViewController.swift in Sources */,
 				E4AA8AA02703838D002E4E97 /* WelcomeViewController.swift in Sources */,
 				E4830386270752F80007CCCC /* artistModel.swift in Sources */,
 				E4AA8AA82703849D002E4E97 /* PlayerViewController.swift in Sources */,
 				E48303882707563F0007CCCC /* featuredPlaylistsModel.swift in Sources */,
+				E4F5F780270B826D006345C1 /* recommendedCellViewModel.swift in Sources */,
 				E437862F2708944400AC10C9 /* recommendedTrackCollectionViewCell.swift in Sources */,
 				E4AA8AAC27038551002E4E97 /* SearchResultViewController.swift in Sources */,
 				E483038A27075EAC0007CCCC /* recommendationModel.swift in Sources */,
