@@ -15,4 +15,5 @@ struct playlist:Codable {
         let images: [ImageModel]
         let name:String
         let owner:user
+    
 }

@@ -10,5 +10,6 @@ import Foundation
 struct recommendedCellViewModel {
     var name:String
     var artworkURL: URL?
+    var artist: String
     
 }

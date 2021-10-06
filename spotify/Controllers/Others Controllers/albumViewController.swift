@@ -22,6 +22,21 @@ class albumViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = album.name
+        navigationItem.largeTitleDisplayMode = .never
+        
+       // print(album.id)
+        DispatchQueue.main.async {
+            APICaller.shared.getAlbumDetails(album: self.album) { result in
+                switch result{
+                case .success(let model):
+                    print(model)
+                    break
+                case .failure(let error):
+                    print(error)
+                    break
+                }
+            }
+        }
         view.backgroundColor = .systemRed
     }
     

@@ -31,6 +31,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
+        navigationItem.largeTitleDisplayMode = .always
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didTapSetting))
         fetchData()
         configureCollectionView()
@@ -156,7 +157,7 @@ class HomeViewController: UIViewController {
     @objc func didTapSetting(){
         let vc = SettingsViewController()
         vc.title = "Settings"
-        navigationItem.largeTitleDisplayMode = .never
+     //   navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -224,7 +225,9 @@ class HomeViewController: UIViewController {
             case .success(let model):
                 let genres = model.genres
                 var seed = Set<String>()
-                while seed.count<5 {
+               // print(genres)
+           //     seed.insert("indian")
+                while seed.count<4 {
                     if let element = genres.randomElement(){
                         seed.insert(element)
                     }
@@ -263,6 +266,9 @@ class HomeViewController: UIViewController {
     
     private func configureModel(newAlbums:[album],featured:[playlist],tracks: [track]){
 
+        self.albumArr = newAlbums
+        self.featuredArr = featured
+        self.tracksArr = tracks
         
         sections.append(.newRelease(viewModels: newAlbums.compactMap({
                                             return newReleasesCellViewModel(name: $0.name,
@@ -278,7 +284,7 @@ class HomeViewController: UIViewController {
         
         sections.append(.recommendedPlaylist(viewModels: tracks.compactMap({
                                                      return recommendedCellViewModel(name: $0.name,
-                                                                                     artworkURL: URL(string: $0.album.images.first?.url ?? " "))}) ))
+                                                                                     artworkURL: URL(string: $0.album.images.first?.url ?? " "), artist: "shashwat")}) ))
         collectionView.reloadData()
     }
 }
@@ -307,10 +313,14 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
         case .newRelease:
             let album = albumArr[indexPath.row]
             let vc  = albumViewController(album: album)
-            navigationItem.largeTitleDisplayMode = .never
+            navigationItem.largeTitleDisplayMode = .always
             navigationController?.pushViewController(vc, animated: true)
             break
         case .featuredPlaylist:
+            let playlist = featuredArr[indexPath.row]
+            let vc  = PlaylistViewController(playlist: playlist)
+            navigationItem.largeTitleDisplayMode = .always
+            navigationController?.pushViewController(vc, animated: true)
             break
         case .recommendedPlaylist:
             break
@@ -345,7 +355,7 @@ extension HomeViewController:UICollectionViewDelegate,UICollectionViewDataSource
                return UICollectionViewCell()
                 }
             let viewModel = viewModels[indexPath.row]
-            cell.configure(with: viewModel)
+         //   cell.configure(with: viewModel)
           //  cell.configure(with: viewModel)
             return cell
         }

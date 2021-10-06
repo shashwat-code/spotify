@@ -19,7 +19,6 @@ class newReleaseCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    
     private let albumLabel:UILabel = {
         let label = UILabel()
         label.numberOfLines = 0

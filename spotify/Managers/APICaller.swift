@@ -14,6 +14,55 @@ final class APICaller{
         static let base = "https://api.spotify.com/v1"
     }
     
+    public func getAlbumDetails(album:album,completion: @escaping (Result<albumDetailResponse,Error>)->Void){
+        createRequest(
+            url: URL(string:Constants.base + "/albums/" + album.id),
+            method: .GET) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data , error == nil  else{
+                    completion(.failure(error!))
+                    return
+                }
+            
+            
+            do{
+                let json = try JSONDecoder().decode(albumDetailResponse.self, from: data)
+                completion(.success(json))
+            }catch{
+                print(error)
+                completion(.failure(error))
+            }
+        }
+            task.resume()
+    }
+    }
+    
+    public func getPlaylistDetails(playlist:playlist,completion: @escaping (Result<playlistDetailResponse,Error>)->Void){
+        createRequest(
+            url: URL(string:Constants.base + "/playlists/" + playlist.id ),
+            method: .GET) { request in
+            print("entered")
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data , error == nil  else{
+                    completion(.failure(error!))
+                    return
+                }
+            
+            
+            do{
+                let json = try JSONDecoder().decode(playlistDetailResponse.self, from: data)
+                completion(.success(json))
+            }catch{
+                print(error)
+                completion(.failure(error))
+            }
+        }
+            task.resume()
+    }
+    }
+    
+    
+//-------------------------HOME API CALL-------------------------------------------------------------------------------------------------------------
     // MARK: - get new releases
     func getNewReleases(completion: @escaping (Result<newReleases,Error>)->Void){
         let baseRequest = Constants.base + "/browse/new-releases/?country=IN&limit=50"
@@ -65,26 +114,7 @@ final class APICaller{
         
     }
     
-    // MARK: - fetch profile
-    func getCurrentProfile(completion: @escaping (Result<UserProfile,Error>)->Void){
-        createRequest(url: URL(string: Constants.base + "/me"), method: .GET) { baseRequest in
-            let task = URLSession.shared.dataTask(with: baseRequest) { data, response, error in
-                guard let data = data , error == nil else{
-                    return }
-                do{
-                    let json = try JSONDecoder().decode(UserProfile.self, from: data)
-              //      print(json)
-                    completion(.success(json))
-                }catch{
-                    print(error)
-               //     print(error.localizedDescription)
-               //     print("error found while parsing the value")
-                    completion(.failure(error))
-                }
-            }
-            task.resume()
-        }
-    }
+   
     
     // MARK: - get recommendation
     func getRecommendations(genres:Set<String>,completion: @escaping ((Result<recommendationModel,Error>)->Void)){
@@ -125,6 +155,28 @@ final class APICaller{
                     }
                     task.resume()
                 }
+    }
+//----------------PROFILE FETCHING API CALL----------------------------------------------------------------------------------------------------------
+    
+    // MARK: - fetch profile
+    func getCurrentProfile(completion: @escaping (Result<UserProfile,Error>)->Void){
+        createRequest(url: URL(string: Constants.base + "/me"), method: .GET) { baseRequest in
+            let task = URLSession.shared.dataTask(with: baseRequest) { data, response, error in
+                guard let data = data , error == nil else{
+                    return }
+                do{
+                    let json = try JSONDecoder().decode(UserProfile.self, from: data)
+              //      print(json)
+                    completion(.success(json))
+                }catch{
+                    print(error)
+               //     print(error.localizedDescription)
+               //     print("error found while parsing the value")
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
     }
     
     

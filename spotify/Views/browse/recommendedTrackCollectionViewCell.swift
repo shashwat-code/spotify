@@ -17,22 +17,47 @@ class recommendedTrackCollectionViewCell: UICollectionViewCell {
         return image
     }()
     
-    
     private let trackLabel:UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
+    private let artistName:UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        label.font = .systemFont(ofSize: 13, weight: .light)
+        return label
+    }()
+    
+    private var likeButton:UIButton  = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "heart"), for: .normal)
+        button.tintColor = .systemGreen
+        return button
+    }()
+    
     
     override init(frame:CGRect) {
         super.init(frame: frame)
- //       contentView.backgroundColor = .secondarySystemFill
         contentView.addSubview(trackLabel)
-//        contentView.addSubview(creatorNameLabel)
-      //  contentView.addSubview(numberOfTracks)
+        likeButton.addTarget(self, action: #selector(didTap), for: .touchUpInside)
+        contentView.addSubview(artistName)
         contentView.addSubview(trackArtwork)
+        contentView.addSubview(likeButton)
+    //    contentView.backgroundColor = .systemBlue
+     //   likeButton.backgroundColor = .black
+    }
+    
+    @objc func didTap(){
+        if likeButton.currentImage == UIImage(systemName: "heart.fill"){
+            likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+        }else{
+            likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+        }
+        
     }
     
     required init?(coder: NSCoder) {
@@ -42,27 +67,32 @@ class recommendedTrackCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         trackLabel.sizeToFit()
-
-        let imageSize:CGFloat = CGFloat(contentView.frame.size.height - 30)
-        trackArtwork.frame = CGRect(x: 15, y: 0, width: imageSize, height: imageSize)
-        trackArtwork.layer.cornerRadius = imageSize/2
-        trackLabel.frame = CGRect(x: 15,
-                                     y: contentView.frame.maxY - 30,
-                                  width: contentView.frame.size.width - 30 ,
+        let imageSize:CGFloat = CGFloat(contentView.frame.size.height)
+        trackArtwork.frame = CGRect(x: 0, y: 0, width: imageSize, height: imageSize)
+        trackLabel.frame = CGRect(x: imageSize+10,
+                                  y: 0,
+                                  width: contentView.frame.size.width - 150 ,
                                   height: 30)
- //       trackLabel.backgroundColor = .blue
-
+        artistName.frame = CGRect(x: imageSize+10,
+                                  y: trackArtwork.frame.midY,
+                                  width: contentView.frame.size.width - 150 ,
+                                  height: 30)
+        likeButton.frame = CGRect(x: contentView.frame.maxX - 80, y: trackArtwork.frame.midY - 17.5, width: 35, height: 35)
+     //   likeButton.backgroundColor = .white
     }
     
-    override func prepareForReuse() {
+    override func prepareForReuse(){
         super.prepareForReuse()
         trackLabel.text = nil
         trackArtwork.image = nil
+        artistName.text = nil
     }
-    func configure(with viewModel: recommendedCellViewModel){
+    
+    func configure(with viewModel: recommendedTrackViewModel){
         trackLabel.text = viewModel.name
+        artistName.text = viewModel.artistName
         trackArtwork.sd_setImage(with: viewModel.artworkURL, completed: nil)
-        
-        
+        print("enterig view model",viewModel)
     }
+    
 }

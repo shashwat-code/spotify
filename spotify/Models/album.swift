@@ -15,5 +15,6 @@ struct album:Codable{
     let images: [ImageModel]
     let release_date:String
     let total_tracks:Int
+    let id:String
     
 }
