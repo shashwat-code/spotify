@@ -46,6 +46,9 @@ class PlaylistViewController: UIViewController {
         super.viewDidLoad()
         title = playlist.name
         view.addSubview(collectionView)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationItem.setHidesBackButton(false, animated: true)
+        navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -101,6 +104,11 @@ extension PlaylistViewController : UICollectionViewDelegate,UICollectionViewData
               let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: playlistHeaderCollectionReusableView.identifier, for: indexPath) as? playlistHeaderCollectionReusableView else{
             return UICollectionReusableView()
         }
+        
+        let viewModel = headerPlaylistViewModel(name: playlist.name,
+                                                desc: playlist.description,
+                                                artworkURL: URL(string:playlist.images.first?.url ?? " "))
+        header.configure(with: viewModel)
         return header
     }
     
@@ -114,7 +122,6 @@ extension PlaylistViewController : UICollectionViewDelegate,UICollectionViewData
         }
         print(viewModels[indexPath.row])
         cell.configure(with: viewModels[indexPath.row])
-    
    //     cell.configure(with: viewModels[indexPath.row])
         return cell
         

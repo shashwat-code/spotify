@@ -77,7 +77,7 @@ class recommendedTrackCollectionViewCell: UICollectionViewCell {
                                   y: trackArtwork.frame.midY,
                                   width: contentView.frame.size.width - 150 ,
                                   height: 30)
-        likeButton.frame = CGRect(x: contentView.frame.maxX - 80, y: trackArtwork.frame.midY - 17.5, width: 35, height: 35)
+        likeButton.frame = CGRect(x: contentView.frame.maxX - 80, y: trackArtwork.frame.midY - 19, width: 35, height: 35)
      //   likeButton.backgroundColor = .white
     }
     
